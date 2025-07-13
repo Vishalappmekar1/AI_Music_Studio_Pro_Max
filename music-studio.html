@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>AI Music Studio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module">
+    import { generateLyrics } from './api/lyrics-ai.js';
+    import { generateAIMusic } from './api/music-ai.js';
+    import { askGemini } from './api/gemini-ai.js';
+
+    window.generateSong = async function () {
+      const lyrics = generateLyrics('Love, Nature, Happiness');
+      const music = generateAIMusic('Upbeat Pop');
+      const gemini = await askGemini('Suggest AI Music Genre');
+
+      document.getElementById('lyrics').innerText = lyrics;
+      document.getElementById('ai-suggestion').innerText = gemini;
+
+      const audio = document.getElementById('player');
+      audio.src = music.songUrl;
+      audio.play();
+    }
+  </script>
+</head>
+<body>
+  <h1>🎙️ Generate AI Music</h1>
+  <button onclick="generateSong()">Generate Dummy AI Song</button>
+
+  <p id="ai-suggestion">Waiting for AI...</p>
+  <p id="lyrics"></p>
+  <audio id="player" controls></audio>
+</body>
+</html>
